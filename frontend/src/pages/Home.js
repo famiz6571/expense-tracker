@@ -50,7 +50,7 @@ const Home = () => {
           fetchCategories={fetchCategories}
         />
       </div>
-      <Charts expenses={expenses} />
+      <Charts expenses={expenses} categories={categories} />
     </div>
   );
 };
