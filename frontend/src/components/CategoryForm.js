@@ -1,34 +1,46 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import FormInput from "./FormInput";
 
 const CategoryForm = ({ fetchCategories }) => {
   const { user } = useContext(AuthContext);
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({ name: "" });
+  const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // clear error on change
+    if (formErrors[e.target.name]) {
+      setFormErrors({ ...formErrors, [e.target.name]: "" });
+    }
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!formData.name.trim()) errors.name = "Category name cannot be empty";
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
 
-    if (!name.trim()) {
-      setError("Category name cannot be empty");
-      return;
-    }
-
-    setError("");
     setLoading(true);
-
     try {
       await axios.post(
         "http://localhost:5000/api/categories",
-        { name: name.trim() },
+        { name: formData.name.trim() },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
-      setName("");
+      setFormData({ name: "" });
       fetchCategories();
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setFormErrors({
+        api: err.response?.data?.message || "Something went wrong",
+      });
     } finally {
       setLoading(false);
     }
@@ -36,27 +48,22 @@ const CategoryForm = ({ fetchCategories }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && (
+      {/* API or general error */}
+      {formErrors.api && (
         <div className="bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm">
-          {error}
+          {formErrors.api}
         </div>
       )}
 
-      {/* Category Name */}
-      <div className="flex flex-col">
-        <label className="mb-1 text-gray-700">
-          Category Name <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          placeholder="Enter category"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
-            error ? "border-red-500" : "border-gray-300"
-          }`}
-        />
-      </div>
+      <FormInput
+        label="Category Name"
+        name="name"
+        placeholder="Enter category"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        error={formErrors.name}
+      />
 
       <button
         type="submit"

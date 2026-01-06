@@ -6,6 +6,8 @@ const FormInput = ({
   placeholder,
   error,
   required = false,
+  name,
+  autoComplete = "off",
 }) => {
   return (
     <div>
@@ -15,8 +17,10 @@ const FormInput = ({
       </label>
 
       <input
+        name={name}
         type={type}
         value={value}
+        autoComplete={autoComplete}
         onChange={onChange}
         placeholder={placeholder}
         className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
