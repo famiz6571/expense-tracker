@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import FormInput from "./FormInput";
+import FormButton from "./FormButton";
 
 const CategoryForm = ({ fetchCategories }) => {
   const { user } = useContext(AuthContext);
@@ -64,14 +65,7 @@ const CategoryForm = ({ fetchCategories }) => {
         required
         error={formErrors.name}
       />
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition disabled:opacity-50"
-      >
-        {loading ? "Adding..." : "Add Category"}
-      </button>
+      <FormButton loading={loading}>Add Category</FormButton>
     </form>
   );
 };

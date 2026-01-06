@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import FormInput from "./FormInput";
 import CustomDropdown from "./CustomDropdown";
+import FormButton from "./FormButton";
 
 const ExpenseForm = ({ fetchExpenses, categories }) => {
   const { user } = useContext(AuthContext);
@@ -101,17 +102,11 @@ const ExpenseForm = ({ fetchExpenses, categories }) => {
         placeholder="Optional"
         value={formData.description}
         onChange={(e) => handleChange("description", e.target.value)}
-        name={'description'}
+        name={"description"}
       />
 
       {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition disabled:opacity-50"
-      >
-        {loading ? "Adding..." : "Add"}
-      </button>
+      <FormButton loading={loading}>Add Expense</FormButton>
     </form>
   );
 };
