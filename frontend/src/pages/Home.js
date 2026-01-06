@@ -30,7 +30,7 @@ const Home = () => {
   useEffect(() => {
     fetchExpenses();
     fetchCategories();
-  }, []);
+  });
 
   return (
     <div className="container">
