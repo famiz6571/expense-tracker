@@ -6,7 +6,7 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import CategoryForm from "../components/CategoryForm";
 import CategoryList from "../components/CategoryList";
-import Charts from "../components/Charts";
+import MultiCharts from "../components/MultiCharts";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -50,7 +50,7 @@ const Home = () => {
           fetchCategories={fetchCategories}
         />
       </div>
-      <Charts expenses={expenses} categories={categories} />
+      <MultiCharts expenses={expenses} categories={categories} />
     </div>
   );
 };
