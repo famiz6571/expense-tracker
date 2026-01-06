@@ -30,27 +30,58 @@ const Home = () => {
   useEffect(() => {
     fetchExpenses();
     fetchCategories();
-  });
+  }, []); // Added empty dependency array to avoid continuous fetching
 
   return (
-    <div className="container">
-      <h1>Dashboard</h1>
-      <div className="forms">
-        <ExpenseForm fetchExpenses={fetchExpenses} categories={categories} />
-        <CategoryForm fetchCategories={fetchCategories} />
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <h1 className="text-3xl font-bold text-indigo-600 mb-6 text-center md:text-left">
+        Dashboard
+      </h1>
+
+      {/* Forms Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+            Add Expense
+          </h2>
+          <ExpenseForm fetchExpenses={fetchExpenses} categories={categories} />
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+            Add Category
+          </h2>
+          <CategoryForm fetchCategories={fetchCategories} />
+        </div>
       </div>
-      <div className="lists">
-        <ExpenseList
-          expenses={expenses}
-          fetchExpenses={fetchExpenses}
-          categories={categories}
-        />
-        <CategoryList
-          categories={categories}
-          fetchCategories={fetchCategories}
-        />
+
+      {/* Lists Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">Expenses</h2>
+          <ExpenseList
+            expenses={expenses}
+            fetchExpenses={fetchExpenses}
+            categories={categories}
+          />
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+            Categories
+          </h2>
+          <CategoryList
+            categories={categories}
+            fetchCategories={fetchCategories}
+          />
+        </div>
       </div>
-      <MultiCharts expenses={expenses} categories={categories} />
+
+      {/* Charts Section */}
+      <div className="bg-white p-6 rounded-xl shadow-md">
+        <h2 className="text-xl font-semibold mb-4 text-gray-700">Statistics</h2>
+        <MultiCharts expenses={expenses} categories={categories} />
+      </div>
     </div>
   );
 };

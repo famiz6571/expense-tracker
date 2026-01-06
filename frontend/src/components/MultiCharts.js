@@ -33,7 +33,7 @@ const MultiCharts = ({ expenses, categories }) => {
   if (!user) return <p>Loading charts...</p>;
   if (!categories) return <p>Loading categories...</p>;
 
-  // 1️⃣ Pie & Doughnut: Expenses by category
+  // Calculate category totals and income/expense totals
   const categoryTotals = {};
   let totalIncome = 0;
   let totalExpense = 0;
@@ -72,7 +72,6 @@ const MultiCharts = ({ expenses, categories }) => {
     ],
   };
 
-  // 2️⃣ Bar Chart: Expense vs Income per category
   const barLabels = Object.keys(categoryTotals);
   const barData = {
     labels: barLabels,
@@ -108,7 +107,6 @@ const MultiCharts = ({ expenses, categories }) => {
     ],
   };
 
-  // 3️⃣ Line Chart: Expenses over time
   const sortedExpenses = [...(expenses || [])].sort(
     (a, b) => new Date(a.date) - new Date(b.date)
   );
@@ -137,7 +135,6 @@ const MultiCharts = ({ expenses, categories }) => {
     ],
   };
 
-  // 4️⃣ Doughnut Chart: Expense vs Income ratio
   const doughnutData = {
     labels: ["Expenses", "Income"],
     datasets: [
@@ -151,29 +148,40 @@ const MultiCharts = ({ expenses, categories }) => {
   const options = {
     responsive: true,
     plugins: { legend: { position: "bottom" } },
+    maintainAspectRatio: false,
   };
 
   return (
-    <div
-      style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}
-    >
-      <div>
-        <h3 style={{ textAlign: "center" }}>Expenses by Category</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Pie Chart */}
+      <div className="bg-white rounded-xl shadow-md p-4 h-[350px]">
+        <h3 className="text-center font-semibold text-gray-700 mb-2">
+          Expenses by Category
+        </h3>
         <Pie data={pieData} options={options} />
       </div>
 
-      <div>
-        <h3 style={{ textAlign: "center" }}>Expense vs Income per Category</h3>
+      {/* Bar Chart */}
+      <div className="bg-white rounded-xl shadow-md p-4 h-[350px]">
+        <h3 className="text-center font-semibold text-gray-700 mb-2">
+          Expense vs Income per Category
+        </h3>
         <Bar data={barData} options={options} />
       </div>
 
-      <div>
-        <h3 style={{ textAlign: "center" }}>Expenses & Income Over Time</h3>
+      {/* Line Chart */}
+      <div className="bg-white rounded-xl shadow-md p-4 h-[350px] md:col-span-1">
+        <h3 className="text-center font-semibold text-gray-700 mb-2">
+          Expenses & Income Over Time
+        </h3>
         <Line data={lineData} options={options} />
       </div>
 
-      <div>
-        <h3 style={{ textAlign: "center" }}>Expense vs Income Ratio</h3>
+      {/* Doughnut Chart */}
+      <div className="bg-white rounded-xl shadow-md p-4 h-[350px] md:col-span-1">
+        <h3 className="text-center font-semibold text-gray-700 mb-2">
+          Expense vs Income Ratio
+        </h3>
         <Doughnut data={doughnutData} options={options} />
       </div>
     </div>
