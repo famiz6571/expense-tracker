@@ -33,7 +33,7 @@ const Home = () => {
   }, []); // Added empty dependency array to avoid continuous fetching
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-4 md:p-8">
       <h1 className="text-3xl font-bold text-indigo-600 mb-6 text-center md:text-left">
         Dashboard
       </h1>
