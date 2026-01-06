@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { AuthContext } from "../context/AuthContext";
 import "chartjs-adapter-date-fns";
+import ChartCard from "./ChartCard";
 
 ChartJS.register(
   ArcElement,
@@ -153,37 +154,21 @@ const MultiCharts = ({ expenses, categories }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Pie Chart */}
-      <div className="bg-white rounded-xl shadow-md p-4 h-[350px]">
-        <h3 className="text-center font-semibold text-gray-700 mb-2">
-          Expenses by Category
-        </h3>
+      <ChartCard title="Expenses by Category">
         <Pie data={pieData} options={options} />
-      </div>
+      </ChartCard>
 
-      {/* Bar Chart */}
-      <div className="bg-white rounded-xl shadow-md p-4 h-[350px]">
-        <h3 className="text-center font-semibold text-gray-700 mb-2">
-          Expense vs Income per Category
-        </h3>
+      <ChartCard title="Expense vs Income per Category">
         <Bar data={barData} options={options} />
-      </div>
+      </ChartCard>
 
-      {/* Line Chart */}
-      <div className="bg-white rounded-xl shadow-md p-4 h-[350px] md:col-span-1">
-        <h3 className="text-center font-semibold text-gray-700 mb-2">
-          Expenses & Income Over Time
-        </h3>
+      <ChartCard title="Expenses & Income Over Time">
         <Line data={lineData} options={options} />
-      </div>
+      </ChartCard>
 
-      {/* Doughnut Chart */}
-      <div className="bg-white rounded-xl shadow-md p-4 h-[350px] md:col-span-1">
-        <h3 className="text-center font-semibold text-gray-700 mb-2">
-          Expense vs Income Ratio
-        </h3>
+      <ChartCard title="Expense vs Income Ratio">
         <Doughnut data={doughnutData} options={options} />
-      </div>
+      </ChartCard>
     </div>
   );
 };

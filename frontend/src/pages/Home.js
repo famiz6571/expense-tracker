@@ -7,6 +7,7 @@ import ExpenseList from "../components/ExpenseList";
 import CategoryForm from "../components/CategoryForm";
 import CategoryList from "../components/CategoryList";
 import MultiCharts from "../components/MultiCharts";
+import GlassCard from "../components/GlassCard";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -30,7 +31,7 @@ const Home = () => {
   useEffect(() => {
     fetchExpenses();
     fetchCategories();
-  }, []); // Added empty dependency array to avoid continuous fetching
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-4 md:p-8">
@@ -40,48 +41,37 @@ const Home = () => {
 
       {/* Forms Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Add Expense
-          </h2>
+        <GlassCard title="Add Expense">
           <ExpenseForm fetchExpenses={fetchExpenses} categories={categories} />
-        </div>
+        </GlassCard>
 
-        <div className="bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Add Category
-          </h2>
+        <GlassCard title="Add Category">
           <CategoryForm fetchCategories={fetchCategories} />
-        </div>
+        </GlassCard>
       </div>
 
       {/* Lists Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">Expenses</h2>
+        <GlassCard title="Expenses" className="overflow-x-auto">
           <ExpenseList
             expenses={expenses}
             fetchExpenses={fetchExpenses}
             categories={categories}
           />
-        </div>
+        </GlassCard>
 
-        <div className="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Categories
-          </h2>
+        <GlassCard title="Categories" className="overflow-x-auto">
           <CategoryList
             categories={categories}
             fetchCategories={fetchCategories}
           />
-        </div>
+        </GlassCard>
       </div>
 
       {/* Charts Section */}
-      <div className="bg-white p-6 rounded-xl shadow-md">
-        <h2 className="text-xl font-semibold mb-4 text-gray-700">Statistics</h2>
+      <GlassCard title="Statistics">
         <MultiCharts expenses={expenses} categories={categories} />
-      </div>
+      </GlassCard>
     </div>
   );
 };
