@@ -39,7 +39,3 @@ It allows users to track their **expenses and income**, categorize them, and vis
 - **Authentication**: JWT, bcrypt  
 - **Styling**: CSS, responsive layout  
 
----
-
-## **Project Structure**
-
